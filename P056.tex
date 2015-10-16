@@ -32,11 +32,11 @@
   ground-based telescope being constructed on Cerro Pach\'on in
   Chile. LSST will survey half the sky every few nights in six optical
   bands. The data will be transferred to NCSA and within 60 seconds
-  they will be reduced using difference imaging techniques and an
-  alert list, using VOEvent, will be issued to the community. Annual
-  data releases will be made from all the data during the 10-year
-  mission, producing catalogs and deep co-added images with
-  unprecedented time resolution for such a large region of sky. In the
+  they will be reduced using difference imaging techniques and
+  detected transients will be announced to the community in the
+  VOEvent format. Annual data releases will be made from all the data
+  during the 10-year mission, with unprecedented depth of coadds and
+  time resolution of catalogs for such a large region of sky. In this
   paper we present the current status of the data processing software,
   and describe how to obtain it.
 \end{abstract}
@@ -46,7 +46,8 @@
 The Large Synoptic Survey Telescope
 \citep[LSST;][]{2008arXiv0805.2366I} will take about 15\,TB of image
 data per night and after ten years of operations will have
-15\,petabytes of catalog data and 0.5\,exabytes of image
+15\,petabytes of catalog data for the final data release and
+0.5\,exabytes of image
 data\footnote{\url{http://lsst.org/scientists/keynumbers}}. We are
 writing a suite of software packages to enable these data products to
 be created with sufficient quality and performance to meet the
@@ -69,14 +70,15 @@ detailed elsewhere \citep{O3-1_adassxxv,LDM-151}.
 The LSST data management science pipelines software system, commonly
 referred to as the ``stack'', is a collection of about 40 separate
 packages providing functionality such as data access libraries, data
-models representing exposures and catalogs, source detection algorithms, astrometry
-fitting, and photometry and measurement algorithms. The software is
-written in a mixture of Python and C++\footnote{Currently we support
-  Python 2.7 but intend to also support Python 3. We are also
-  migrating the C++ codebase to C++11.}, where the latter is used for
-CPU-intensive algorithms. The codebase consists of approximately
-100,000 lines of Python and 110,000 lines of C++ (not including
-comment or blank lines and not counting expanded Swig interface code).
+models representing exposures and catalogs, source detection
+algorithms, astrometry fitting, and photometry and measurement
+algorithms. The software is written in a mixture of Python and
+C++\footnote{Currently we support Python 2.7 but intend to also
+  support Python 3. We are also migrating the C++ codebase to C++11.},
+where the latter is used for CPU-intensive algorithms. The codebase
+consists of approximately 100,000 lines of Python and 110,000 lines of
+C++ (not including comment or blank lines and not counting expanded
+SWIG \citep[see e.g.][]{beazley2003automated} interface code).
 
 The science pipeline packages are namespaced (with an \texttt{lsst.}\
 root) and grouped by their functionality. The core namespaces are
@@ -108,9 +110,9 @@ defined as follows:
 \item[\textbf{obs}] These classes provide instrument-specific
   knowledge to the software system, providing information to the data
   access framework to teach it how to interpret data from a range of
-  optical cameras. The \texttt{obs} packages currently support data from Subaru
-  and CFHT in addition to simulated LSST data. Work is ongoing to add
-  support for DECam.
+  optical cameras. The \texttt{obs} packages currently support data
+  from some instruments on Subaru and CFHT, in addition to simulated
+  LSST data. Work is ongoing to add support for DECam.
 
 \item[\textbf{pipe}] Pipeline infrastructure and tasks. A task is the
   name for a core processing component that can be chained with other
@@ -133,14 +135,13 @@ and was labeled \emph{Summer 2015} and released in September
 online;\footnote{\url{https://community.lsst.org/t/268}} here we
 provide a summary.
 
-\paragraph{Multi-band processing for coadds} New command-line
-tasks have been added for consistent multi-band processing of
-coadds. These include a task to merge footprints and peaks from all
-detection images into a single, consistent set of footprints and
-peaks; a task to deblend and measure on per-band coadds, starting from
-consistent footprints and peaks for parent objects; and a task to
-combine separate measurements from different bands into a catalog
-suitable for driving forced photometry.
+\paragraph{Multi-band processing for coadds} New command-line tasks
+have been added for consistent multi-band processing of coadds. This
+new data processing flow carefully combines source measurements taken
+in multiple bands to guarantee consistent deblending across all bands,
+including when carrying out forced photometry, thereby enabling
+reliable color measurement, and ensuring that all sources are
+measured in each band, regardless of the bands where they are detected.
 
 \paragraph{Upgraded astrometry calculation} Previously astrometry was
 calculated using astrometry.net code \citep{2010AJ....139.1782L} and
@@ -149,10 +150,10 @@ code the astrometry fitter is now pluggable and now includes an
 alternative implementation.
 
 \paragraph{Support for PSFex} PSFEx is currently the state of the art
-external package for PSF determination, used in projects such as DES
-\citep{2011ASPC..442..435B}. LSST wrappers were created such that
-PSFEx could be used as a plugin in place of the built in PSF
-determiner.
+external package for point spread function (PSF) determination, used
+in projects such as DES \citep{2011ASPC..442..435B}. LSST wrappers
+were created such that PSFEx could be used as a plugin in place of the
+built in PSF determiner.
 
 \paragraph{Aperture correction} Aperture corrections are now applied
 consistently throughout the stack.
@@ -182,7 +183,7 @@ internals of \texttt{afw.table} and, in particular, much better
 support for compound fields (such as Right Ascension/Declination tuples).
 
 \paragraph{Device independent displays} DS9
-\citep{2011ASPC..442..633J} is no longer hard-coded into the software
+\citep{2011ASPC..442..633J} is no longer hard-wired into the software
 and the choice of display tool is now user configurable.  The
 intention is for the next release to include support for the Firefly
 visualization tool \citep{O10-1_adassxxv}.
