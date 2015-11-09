@@ -53,15 +53,15 @@ writing a suite of software packages to enable these data products to
 be created with sufficient quality and performance to meet the
 established science goals \citep{2009arXiv0912.0201L}.
 
-The science pipeline software enables two key components of the data
+The science pipeline software will enable two key components of the data
 management system. The Alert Production pipelines (also known as
 \emph{Level 1}) process the data from the telescope and publish alerts
 to the community within 60 seconds of data acquisition. Data Release
 Production (\emph{Level 2}) is responsible for the annual data
 releases which reprocess all the data each year to generate the best
-possible catalogs. Both these systems are integrated with the
+possible catalogs. Both these systems will be integrated with the
 Calibration Products Production that continuously calculates the best
-calibrations for the pipelines. The software also provides a toolkit
+calibrations for the pipelines. The software will also provide a toolkit
 for user-supplied code that can be used to efficiently and effectively
 analyze LSST data as part of \emph{Level 3} processing or their own
 pipelines. Full details of the data management applications design are
@@ -75,7 +75,8 @@ algorithms, astrometry fitting, and photometry and measurement
 algorithms. The software is written in a mixture of Python and
 C++\footnote{Currently we support Python 2.7 but intend to also
   support Python 3. We are also migrating the C++ codebase to C++11.},
-where the latter is used for CPU-intensive algorithms. The codebase
+where the latter is used for CPU-intensive algorithms, or when the
+algorithms require access to complex data structures. The codebase
 consists of approximately 100,000 lines of Python and 110,000 lines of
 C++ (not including comment or blank lines and not counting expanded
 SWIG \citep[see e.g.][]{beazley2003automated} interface code).
@@ -177,7 +178,7 @@ photometry.
 
 \paragraph{Significant improvements in the table class} The AFW package
 has a native C++ implementation of a class for manipulating table data
-for handling the results of detections and measurements
+for handling the results of detection and measurement
 algorithms. This release comes with some major enhancements to the
 internals of \texttt{afw.table} and, in particular, much better
 support for compound fields (such as Right Ascension/Declination tuples).
@@ -191,10 +192,10 @@ visualization tool \citep{O10-1_adassxxv}.
 \section{Obtaining the software}
 
 The software is known to work on CentOS 6 and 7, recent Debians and
-Mac OS X Yosemite and Mavericks,\footnote{This release is known not to
+Mac OS X Yosemite and Mavericks (this release is known not to
   work on Mac OS X El Capitan due to interactions between library path
   environment variables and the new System Integrity Protection
-  feature.}  with a C++11 compatible compiler such as GCC 4.8.3 or later, or
+  feature; this has been fixed in the current development version), with a C++11 compatible compiler such as GCC 4.8.3 or later, or
 Apple \texttt{clang} 6 . The recommended way to install the software from source is to
 use the \texttt{eups} distribution installation system
 \citep{EUPS}. Experimental binary releases for Linux have also been
