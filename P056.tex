@@ -145,12 +145,12 @@ reliable color measurement, and ensuring that all sources are
 measured in each band, regardless of the bands where they are detected.
 
 \paragraph{Upgraded astrometry calculation} Previously astrometry was
-calculated using astrometry.net code \citep{2010AJ....139.1782L} and
+calculated using astrometry.net code \citep[][ascl:1208.001]{2010AJ....139.1782L} and
 related catalogs distributed by LSST. To improve flexibility in the
 code the astrometry fitter is now pluggable and now includes an
 alternative implementation.
 
-\paragraph{Support for PSFex} PSFEx is currently the state of the art
+\paragraph{Support for PSFex} PSFEx (ascl:1301.001) is currently the state of the art
 external package for point spread function (PSF) determination, used
 in projects such as DES \citep{2011ASPC..442..435B}. LSST wrappers
 were created such that PSFEx could be used as a plugin in place of the
@@ -184,7 +184,7 @@ internals of \texttt{afw.table} and, in particular, much better
 support for compound fields (such as Right Ascension/Declination tuples).
 
 \paragraph{Device independent displays} DS9
-\citep{2011ASPC..442..633J} is no longer hard-wired into the software
+\citep[][ascl:0003.002]{2011ASPC..442..633J} is no longer hard-wired into the software
 and the choice of display tool is now user configurable.  The
 intention is for the next release to include support for the Firefly
 visualization tool \citep{O10-1_adassxxv}.
